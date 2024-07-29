@@ -6,7 +6,7 @@ build/
 !**/src/test/**/build/
 
 ### CUSTOM ###
-application-dev.yml
+src/main/resources/application-dev.yml
 Dockerfile-dev
 *.yml
 prometheus.yml
