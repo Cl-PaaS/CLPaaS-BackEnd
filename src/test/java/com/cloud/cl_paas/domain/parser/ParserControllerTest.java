@@ -1,8 +1,8 @@
 package com.cloud.cl_paas.domain.parser;
 
 import com.cloud.cl_paas.domain.parser.controller.ParserController;
-import com.cloud.cl_paas.domain.parser.dto.MessageReqDto;
-import com.cloud.cl_paas.domain.parser.dto.MessageRespDto;
+import com.cloud.cl_paas.domain.parser.dto.ReqMessageDto;
+import com.cloud.cl_paas.domain.parser.dto.RespMessageDto;
 import com.cloud.cl_paas.domain.parser.service.ParserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -34,22 +34,22 @@ public class ParserControllerTest {
     @MockBean
     private ParserService parserService;
 
-    private MessageRespDto messageRespDto;
+    private RespMessageDto respMessageDto;
 
     /* 테스트 수정 필요 */
 
     @BeforeEach
     public void setup() {
         // Given
-        MessageReqDto messageReqDto = new MessageReqDto("Test message with email test@test.com, url http://test.com and phone 123-456-7890");
-        messageRespDto = new MessageRespDto("test@test.com", "http://test.com", "123-456-7890");
+        ReqMessageDto reqMessageDto = new ReqMessageDto("Test message with email test@test.com, url http://test.com and phone 123-456-7890");
+        respMessageDto = new RespMessageDto("test@test.com", "http://test.com", "123-456-7890");
     }
 
     @Test
     @DisplayName("정상적인 요청일 때 파싱된 단어를 반환해야 함")
     public void shouldReturnParsedWordsWhenValidRequest() throws Exception {
         // Given
-        when(parserService.getWords(any(MessageReqDto.class))).thenReturn(messageRespDto);
+        when(parserService.getWords(any(ReqMessageDto.class))).thenReturn(respMessageDto);
 
         // When & Then
         mockMvc.perform(get("/parser")

@@ -1,7 +1,7 @@
 package com.cloud.cl_paas.domain.parser.service;
 
-import com.cloud.cl_paas.domain.parser.dto.MessageReqDto;
-import com.cloud.cl_paas.domain.parser.dto.MessageRespDto;
+import com.cloud.cl_paas.domain.parser.dto.ReqMessageDto;
+import com.cloud.cl_paas.domain.parser.dto.RespMessageDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,15 +13,15 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 @Service
 public class ParserService {
-    public MessageRespDto getWords(MessageReqDto messageReqDto) {
+    public RespMessageDto getWords(ReqMessageDto reqMessageDto) {
         // 이메일 파싱
-        String messages = messageReqDto.getMessage();
+        String messages = reqMessageDto.getMessage();
 
         String email = getEmail(messages);
         String url = getUrl(messages);
         String phone = getPhone(messages);
 
-        return new MessageRespDto(email, url, phone);
+        return new RespMessageDto(email, url, phone);
     }
 
     /* 편의 메서드 */
