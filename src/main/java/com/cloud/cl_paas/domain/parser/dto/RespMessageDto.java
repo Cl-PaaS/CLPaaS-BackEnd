@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class MessageRespDto {
+public class RespMessageDto {
     private String email;
     private String url;
     private String phone;

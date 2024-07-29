@@ -1,7 +1,7 @@
 package com.cloud.cl_paas.domain.parser.controller;
 
-import com.cloud.cl_paas.domain.parser.dto.MessageReqDto;
-import com.cloud.cl_paas.domain.parser.dto.MessageRespDto;
+import com.cloud.cl_paas.domain.parser.dto.ReqMessageDto;
+import com.cloud.cl_paas.domain.parser.dto.RespMessageDto;
 import com.cloud.cl_paas.domain.parser.service.ParserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,7 @@ public class ParserController {
     private final ParserService parserService;
 
     @GetMapping("/parser")
-    public MessageRespDto getWordsFromMessage(@RequestBody MessageReqDto messageReqDto) {
-        return parserService.getWords(messageReqDto);
+    public RespMessageDto getWordsFromMessage(@RequestBody ReqMessageDto reqMessageDto) {
+        return parserService.getWords(reqMessageDto);
     }
 }
