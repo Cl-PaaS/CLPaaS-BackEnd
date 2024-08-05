@@ -1,13 +1,13 @@
-package cloudclub.clpaas_backend;
+package com.cloud.cl_paas;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ClpaasBackendApplication {
+public class ClPaasApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ClpaasBackendApplication.class, args);
+		SpringApplication.run(ClPaasApplication.class, args);
 	}
 
 }

@@ -1,9 +1,19 @@
 HELP.md
+.DS_Store
 .gradle
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+
+### CUSTOM ###
+application-dev.yml
+Dockerfile-dev
+*.yml
+prometheus.yml
+grafana_data
+logs
+pinpoint-agent-2.5.0
 
 ### STS ###
 .apt_generated
@@ -26,6 +36,7 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
@@ -35,3 +46,4 @@ out/
 
 ### VS Code ###
 .vscode/
+
