@@ -41,7 +41,7 @@ public class SafeBrowsingService {
             try {
                 Map<String, Object> jsonResponse = objectMapper.readValue(response, new TypeReference<>() {
                 });
-                return jsonResponse.get("matches") != null ? "Unsafe" : "Safe";
+                return jsonResponse.get("matches") != null ? "unsafe" : "safe";
             } catch (JsonProcessingException e)  { // TODO: 예외 처리 방법 변경 예정
                 return "Error processing the response";
             }
