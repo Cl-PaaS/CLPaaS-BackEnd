@@ -7,10 +7,22 @@ import org.springframework.stereotype.Service;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.cloud.cl_paas.domain.validator.dto.RespUrlDto;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class UrlExpanderService {
+    public RespUrlDto isUrlShortened(String url) {
+        RespUrlDto respUrlDto = new RespUrlDto();
+        if (url.length() < 10 || url.contains("bit.ly") || url.contains("goo.gl") || url.contains("tinyurl.com")) {
+            String originUrl = expandUrl(url);
+            respUrlDto.setOriginalUrl(originUrl);
+        } else {
+            respUrlDto.setOriginalUrl(url);
+        }
+        return respUrlDto;
+    }
     public String expandUrl(String shortUrl) {
         try {
             URL url = new URL(shortUrl);
