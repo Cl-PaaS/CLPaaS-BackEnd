@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RespUrlDto {
-    private Boolean isValid;
-    private String validateMessage;
+    private String safeStatus;
+    private String originalUrl;
 }
