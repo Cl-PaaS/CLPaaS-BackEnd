@@ -35,25 +35,34 @@ public class ValidatorController {
 		// 키릴 문자 확인
 		validateService.validateCyrillic(parsedData.getEmail(), parsedData.getUrl());
 
-		// 변조 의심 이메일 확인
-		validateService.validateEmail(parsedData.getEmail());
+		if (parsedData.getEmail() != null) {
+			// 변조 의심 이메일 확인
+			validateService.validateEmail(parsedData.getEmail());
+		}
 
-		// 단축 URL의 원본 주소 확인
-		RespUrlDto respUrlDto = urlExpanderService.isUrlShortened(parsedData.getUrl());
-		log.info("originalUrl = {}", respUrlDto.getOriginalUrl());
+		RespUrlDto respUrlDto = new RespUrlDto();
 
-		// URL의 안전 여부 확인
-		String GoogleSafeStatus = safeBrowsingService.checkUrlSafety(parsedData.getUrl());
-		log.info("GoogleSafeStatus = {}", GoogleSafeStatus);
+		if (parsedData.getUrl() != null) {
+			// 변조 의심 URL 확인
 
-		// 피시 탱크를 통한 안전 여부 확인
-		String phishtankSafeStatus = phishtankValidateService.checkUrlSafety(parsedData.getUrl());
-		log.info("phishtankSafeStatus = {}", phishtankSafeStatus);
+			// 단축 URL의 원본 주소 확인
+			respUrlDto = urlExpanderService.isUrlShortened(parsedData.getUrl());
+			log.info("originalUrl = {}", respUrlDto.getOriginalUrl());
 
-		if (GoogleSafeStatus.equals("safe") && phishtankSafeStatus.equals("safe")) {
-			respUrlDto.setSafeStatus("safe");
-		} else {
-			respUrlDto.setSafeStatus("danger");
+			// URL의 안전 여부 확인
+			String googleSafeStatus = safeBrowsingService.checkUrlSafety(parsedData.getUrl());
+			log.info("GoogleSafeStatus = {}", googleSafeStatus);
+
+			// 피시 탱크를 통한 안전 여부 확인
+			String phishtankSafeStatus = phishtankValidateService.checkUrlSafety(parsedData.getUrl());
+			log.info("phishtankSafeStatus = {}", phishtankSafeStatus);
+
+			// TODO: phishtankSafeStatus의 unknown 해결 필요
+			if (googleSafeStatus.equals("safe") && phishtankSafeStatus.equals("safe")) {
+				respUrlDto.setSafeStatus("safe");
+			} else {
+				respUrlDto.setSafeStatus("danger");
+			}
 		}
 
 		return respUrlDto;
