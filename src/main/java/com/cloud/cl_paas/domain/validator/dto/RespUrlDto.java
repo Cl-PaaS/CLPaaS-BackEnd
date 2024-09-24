@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class RespUrlDto {
-    private String safeStatus;
+    private Boolean isPhishing;
     private String originalUrl;
 }

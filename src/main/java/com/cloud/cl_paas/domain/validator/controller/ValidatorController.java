@@ -32,17 +32,21 @@ public class ValidatorController {
 		RespMessageDto parsedData = parserService.getWords(reqMessageDto);
 		log.info("parsedData = {}", parsedData);
 
-		// 키릴 문자 확인
-		validateService.validateCyrillic(parsedData.getEmail(), parsedData.getUrl());
 
-		if (parsedData.getEmail() != null) {
+		RespUrlDto respUrlDto = new RespUrlDto();
+		String googleSafeStatus = "safe";
+		String phishtankSafeStatus = "safe";
+		respUrlDto.setOriginalUrl("none");
+
+		if (parsedData.getEmail() != null && !parsedData.getEmail().trim().isEmpty()) {
+			// 키릴 문자 확인
+			validateService.validateCyrillic(parsedData.getEmail(), parsedData.getUrl());
+
 			// 변조 의심 이메일 확인
 			validateService.validateEmail(parsedData.getEmail());
 		}
 
-		RespUrlDto respUrlDto = new RespUrlDto();
-
-		if (parsedData.getUrl() != null) {
+		if (parsedData.getUrl() != null && !parsedData.getUrl().trim().isEmpty()) {
 			// 변조 의심 URL 확인
 
 			// 단축 URL의 원본 주소 확인
@@ -50,19 +54,17 @@ public class ValidatorController {
 			log.info("originalUrl = {}", respUrlDto.getOriginalUrl());
 
 			// URL의 안전 여부 확인
-			String googleSafeStatus = safeBrowsingService.checkUrlSafety(parsedData.getUrl());
+			googleSafeStatus = safeBrowsingService.checkUrlSafety(parsedData.getUrl());
 			log.info("GoogleSafeStatus = {}", googleSafeStatus);
 
 			// 피시 탱크를 통한 안전 여부 확인
-			String phishtankSafeStatus = phishtankValidateService.checkUrlSafety(parsedData.getUrl());
+			phishtankSafeStatus = phishtankValidateService.checkUrlSafety(parsedData.getUrl());
 			log.info("phishtankSafeStatus = {}", phishtankSafeStatus);
-
-			// TODO: phishtankSafeStatus의 unknown 해결 필요
-			if (googleSafeStatus.equals("safe") && phishtankSafeStatus.equals("safe")) {
-				respUrlDto.setSafeStatus("safe");
-			} else {
-				respUrlDto.setSafeStatus("danger");
-			}
+		}
+		if (googleSafeStatus.equals("safe") && (phishtankSafeStatus.equals("safe") || phishtankSafeStatus.equals("unknown"))) {
+			respUrlDto.setIsPhishing(false);
+		} else {
+			respUrlDto.setIsPhishing(true);
 		}
 
 		return respUrlDto;
