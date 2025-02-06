@@ -26,7 +26,7 @@ public class ParserService {
 
     /* 편의 메서드 */
     private String getEmail(String message) {
-        Pattern emailPattern = Pattern.compile("([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6})");
+        Pattern emailPattern = Pattern.compile("([\\p{L}0-9._%+-]+@[\\p{L}0-9.-]+\\.[a-zA-Z]{2,6})");
         Matcher matcher = emailPattern.matcher(message);
         if (matcher.find()) {
             return matcher.group();
@@ -35,7 +35,7 @@ public class ParserService {
     }
 
     private String getUrl(String message) {
-        Pattern urlPattern = Pattern.compile("(https?://[\\w\\-._~:/?#\\[\\]@!$&'()*+,;=%]+)");
+        Pattern urlPattern = Pattern.compile("(https?://[\\p{L}0-9\\-._~:/?#\\[\\]@!$&'()*+,;=%]+)");
         Matcher matcher = urlPattern.matcher(message);
         if (matcher.find()) {
             return matcher.group();
